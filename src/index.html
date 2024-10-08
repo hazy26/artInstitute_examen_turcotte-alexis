@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./assets/img/palette.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Art Institute Of Chicago</title>
+    <script type="module" src="./assets/js/main.js" defer></script>
+  </head>
+  <body class="relative bg-slate-500 p-4 flex flex-col">
+    <header class="p-6 self-center flex flex-col items-center gap-4">
+      <div>
+        <input type="text" class="search-input rounded-md py-1 border-2 border-slate-100">
+        <button class="search-btn bg-slate-900 text-slate-300 px-2 py-1 rounded-md border-2 border-slate-900 hover:bg-slate-200 hover:text-slate-900">Search</button>
+      </div>
+       <div class="self-center flex gap-2 p-6 justify-center items-center">
+        <button class="first-page-btn bg-slate-900 text-slate-300 py-1 px-2 rounded-md w-12 border-2 border-slate-900 hover:bg-slate-200 hover:text-slate-900">--</button>
+        <button class="previous-btn bg-slate-900 text-slate-300 py-1 px-2 rounded-md w-12 border-2 border-slate-900 hover:bg-slate-200 hover:text-slate-900">-</button>
+        <p class="flex gap-2 font-bold px-4"><span class="current-page"></span> / <span class="total-pages"></span></p>
+        <button class="next-btn bg-slate-900 text-slate-300 py-1 px-2 rounded-md w-12 border-2 border-slate-900 hover:bg-slate-200 hover:text-slate-900">+</button>
+        <button class="last-page-btn bg-slate-900 text-slate-300 py-1 px-2 rounded-md w-12 border-2 border-slate-900 hover:bg-slate-200 hover:text-slate-900">++</button>
+      </div>
+    </header>
+    <main class="flex flex-col items-center justify-center">
+      <ul id="artworks-list" class="grid md:grid-cols-2 lg:grid-cols-3 p-4 gap-6  max-w-[1280px]">
+      </ul>
+    </main>
+  </body>
+</html>
