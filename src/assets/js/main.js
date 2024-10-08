@@ -37,10 +37,15 @@ function openModal(id){
   }
 }
 
+function searchArtwork(){
+  const searchValue =  searchInput.value.toLowerCase();
+  const url = `https://api.artic.edu/api/v1/artworks/search?q=${searchValue}`;
+  fetchUrl(url);
+}
+
 function fetchUrl(url){
   fetch(url).
   then(response => response.json()).then(data => {
-    console.log(data)
 
     if(data.pagination.next_url){
       nextBtn.setAttribute('data-url', data.pagination.next_url);
@@ -61,7 +66,7 @@ function fetchUrl(url){
     `<li class="rounded-md bg-slate-800 border-4 border-white">
 
       <figure class="rounded-t-sm">
-        <img class="rounded-t-sm w-full h-80 object-cover" src="https://www.artic.edu/iiif/2/${data.image_id}/full/400,/0/default.jpg" alt="">
+        <img class="rounded-t-sm w-full h-80 object-cover" src="https://www.artic.edu/iiif/2/${data.image_id}/full/843,/0/default.jpg" alt="">
       </figure>
 
       <div class="p-3 flex flex-col gap-4 items-center justify-between text-center text-slate-200 tracking-wide">
@@ -71,9 +76,9 @@ function fetchUrl(url){
   
       <div id="${data.id}" class="hidden artwork-details fixed overflow-scroll top-0 left-0 bg-slate-900 h-dvh w-dvw flex flex-col gap-8 px-4 py-8">
         <button id="${data.id}" class="close-btn text-2xl self-end hover:text-slate-500">X</button>
-        <h3 class="text-xl font-bold tracking-wide">${data.title}</h3>
+        <h3 class="text-xl font-bold tracking-wide max-w-[400px] self-center">${data.title}</h3>
         <figure class="self-center">
-          <img class="border-4 border-white" src="https://www.artic.edu/iiif/2/${data.image_id}/full/400,/0/default.jpg" alt="">    
+          <img class="border-4 border-white" src="https://www.artic.edu/iiif/2/${data.image_id}/full/843,/0/default.jpg" alt="">    
         </figure>
         <div class="text-left flex flex-col gap-3 self-center pb-4 text-lg">
           <p class="font-light tracking-wider">Artiste: <span class="font-medium">${data.artist_title}</span></p>
@@ -91,22 +96,6 @@ function fetchUrl(url){
   })
 }
 fetchUrl('https://api.artic.edu/api/v1/artworks');
-
-function searchArtwork(){
-
-  const searchValue =  searchInput.value.toLowerCase();
-
-  /* articleCards.forEach(card => {
-      const searchResult = card.getAttribute('data-search').toLowerCase();
-      if(searchResult.includes(searchValue)){
-          card.classList.remove('hidden');
-      } else {
-          card.classList.add('hidden');
-      };
-  }); */
-
-  console.log(searchValue)
-}
 
 [nextBtn, previousBtn, firstPageBtn, lastPageBtn].forEach(btn => {
   btn.addEventListener('click', () => {
