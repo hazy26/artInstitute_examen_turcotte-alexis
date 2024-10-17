@@ -10,6 +10,9 @@ const artworksList = document.querySelector('#artworks-list');
 const totalPages = document.querySelector('.total-pages');
 const currentPage = document.querySelector('.current-page');
 
+const savedSearches = [];
+const savedSearchesHtml = document.querySelector('.saved-searches');
+
 function initiateDetailsBtn(){
   const detailsBtns = document.querySelectorAll('.details-btn');
   const closeBtns = document.querySelectorAll('.close-btn');
@@ -41,11 +44,20 @@ function searchArtwork(){
   const searchValue =  searchInput.value.toLowerCase();
   const url = `https://api.artic.edu/api/v1/artworks/search?q=${searchValue}`;
   fetchUrl(url);
+
+  savedSearches.push(searchValue);
+  console.log(savedSearches);
+  localStorage.setItem('search', JSON.stringify(savedSearches));
+  savedSearches.forEach(searches => {
+    savedSearchesHtml.innerHTML += `<li>${searches}</li>`;
+  })
 }
 
 function fetchUrl(url){
   fetch(url).
   then(response => response.json()).then(data => {
+
+    //console.log(data);
 
     if(data.pagination.next_url){
       nextBtn.setAttribute('data-url', data.pagination.next_url);
@@ -80,12 +92,12 @@ function fetchUrl(url){
         <figure class="self-center">
           <img class="border-4 border-white" src="https://www.artic.edu/iiif/2/${data.image_id}/full/843,/0/default.jpg" alt="">    
         </figure>
-        <div class="text-left flex flex-col gap-3 self-center pb-4 text-lg">
+        <div class="text-left flex flex-col gap-3 self-center pb-4 text-lg max-w-[680px]">
           <p class="font-light tracking-wider">Artiste: <span class="font-medium">${data.artist_title}</span></p>
           <p class="font-light tracking-wider">Date de création: <span class="font-medium">${data.date_end}</span></p>
-          <p class="font-light tracking-wider">Description:</p>
-          <p class="font-light tracking-wider">Termes de description:</p>
-          <p class="font-light tracking-wider">Matériel utilisé:</p> 
+          <p class="font-light tracking-wider">Description: ${data.description}</p>
+          <p class="font-light tracking-wider">Termes: ${data.term_titles}</p>
+          <p class="font-light tracking-wider">Matériel utilisé: ${data.material_titles}</p> 
         </div>
         <button id="${data.id}" class="close-btn bg-slate-200 border-2 border-slate-200 text-lg tracking-wide text-slate-900 w-fit rounded-md px-4 py-2 self-center hover:bg-slate-400 hover:border-slate-100">Close</button>
       </div>
@@ -106,10 +118,11 @@ fetchUrl('https://api.artic.edu/api/v1/artworks');
   });
 });
 
-searchInput.addEventListener('input', () => {
+/* searchInput.addEventListener('input', () => {
   searchArtwork();
-});
+}); */
 
 searchBtn.addEventListener('click', () => {
   searchArtwork();
 })
+
